@@ -30,6 +30,18 @@ def combienDeVoisin(matrice, x, y):
                     pass
     return nbVoisin
 
+def prochaineMatrice(matrice):
+    newMatrice = initMatrice(HEIGHT // 10, WIDTH // 10)
+    for x in range(len(matrice)):
+        for y in range(len(matrice[x])):
+            if matrice[x][y] == 0:
+                if combienDeVoisin(matrice, x, y) == 3:
+                    newMatrice[x][y] = 1
+            if matrice[x][y] == 1:
+                if combienDeVoisin(matrice, x, y) == 2 or combienDeVoisin(matrice, x, y) == 3:
+                    newMatrice[x][y] = 1
+    return newMatrice
+
 def changerValeurMatrice(matrice, x, y, newValeur):
     matrice[x][y] = newValeur
     
@@ -58,6 +70,8 @@ while RUNNING:
                 pygame.draw.rect(SCREEN, "white", [x * 10, y * 10, 10, 10])
     
     pygame.display.flip()
+    
+    MATRICE = prochaineMatrice(MATRICE)
     
     DT = CLOCK.tick(60) / 1000
 
