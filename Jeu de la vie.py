@@ -1,3 +1,10 @@
+import pygame
+
+HEIGHT = 100
+WIDTH = 100
+
+# -------------------- FONCTIONS --------------------#
+
 def initMatrice(longueur, largeur):
     matrice = []
     
@@ -10,5 +17,22 @@ def initMatrice(longueur, largeur):
 
 def changerValeurMatrice(matrice, x, y, newValeur):
     matrice[x][y] = newValeur
+    
+# -------------------- PYGAME --------------------#
 
-print(initMatrice(3, 3))
+pygame.init()
+SCREEN = pygame.display.set_mode((HEIGHT, WIDTH))
+CLOCK =pygame.time.Clock()
+RUNNING = True
+DT = 0
+
+while RUNNING:
+    for event in pygame.event.get():
+        if event.type() == pygame.QUIT:
+            RUNNING = False
+    
+    SCREEN.fill("green")
+    
+    # Code
+    
+    DT = CLOCK.tick(60) / 1000
