@@ -8,4 +8,7 @@ def initMatrice(longueur, largeur):
     
     return matrice
 
+def changerValeurMatrice(matrice, x, y, newValeur):
+    matrice[x][y] = newValeur
+
 print(initMatrice(3, 3))
