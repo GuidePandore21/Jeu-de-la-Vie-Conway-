@@ -15,6 +15,21 @@ def initMatrice(longueur, largeur):
     
     return matrice
 
+def combienDeVoisin(matrice, x, y):
+    nbVoisin = 0
+    for x in range(-1, 2, 1):
+        for y in range(-1, 2, 1):
+            print(x, y)
+            if x == 0 and y == 0:
+                pass
+            else:
+                try:
+                    if matrice[x][y] == 1:
+                        nbVoisin += 1
+                except:
+                    pass
+    return nbVoisin
+
 def changerValeurMatrice(matrice, x, y, newValeur):
     matrice[x][y] = newValeur
     
