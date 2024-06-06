@@ -17,17 +17,14 @@ def initMatrice(longueur, largeur):
 
 def combienDeVoisin(matrice, x, y):
     nbVoisin = 0
-    for x in range(-1, 2, 1):
-        for y in range(-1, 2, 1):
-            print(x, y)
-            if x == 0 and y == 0:
-                pass
-            else:
-                try:
-                    if matrice[x][y] == 1:
-                        nbVoisin += 1
-                except:
-                    pass
+    for dx in range(-1, 2):
+        for dy in range(-1, 2):
+            if dx == 0 and dy == 0:
+                continue
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < len(matrice) and 0 <= ny < len(matrice[0]):
+                if matrice[nx][ny] == 1:
+                    nbVoisin += 1
     return nbVoisin
 
 def prochaineMatrice(matrice):
@@ -37,15 +34,19 @@ def prochaineMatrice(matrice):
             if matrice[x][y] == 0:
                 if combienDeVoisin(matrice, x, y) == 3:
                     newMatrice[x][y] = 1
-            if matrice[x][y] == 1:
-                if combienDeVoisin(matrice, x, y) == 2 or combienDeVoisin(matrice, x, y) == 3:
+            elif matrice[x][y] == 1:
+                if combienDeVoisin(matrice, x, y) in [2, 3]:
                     newMatrice[x][y] = 1
     return newMatrice
 
 def changerValeurMatrice(matrice, x, y, newValeur):
     matrice[x][y] = newValeur
-    
+
 MATRICE = initMatrice(HEIGHT // 10, WIDTH // 10)
+
+changerValeurMatrice(MATRICE, 3, 5, 1)
+changerValeurMatrice(MATRICE, 4, 5, 1)
+changerValeurMatrice(MATRICE, 5, 5, 1)
     
 # -------------------- PYGAME --------------------#
 
@@ -74,5 +75,7 @@ while RUNNING:
     MATRICE = prochaineMatrice(MATRICE)
     
     DT = CLOCK.tick(60) / 1000
+    
+    pygame.time.wait(1000)
 
 pygame.quit()
