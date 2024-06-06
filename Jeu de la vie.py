@@ -18,6 +18,8 @@ def initMatrice(longueur, largeur):
 def changerValeurMatrice(matrice, x, y, newValeur):
     matrice[x][y] = newValeur
     
+MATRICE = initMatrice(HEIGHT // 10, WIDTH // 10)
+    
 # -------------------- PYGAME --------------------#
 
 pygame.init()
@@ -28,11 +30,20 @@ DT = 0
 
 while RUNNING:
     for event in pygame.event.get():
-        if event.type() == pygame.QUIT:
+        if event.type == pygame.QUIT:
             RUNNING = False
     
     SCREEN.fill("green")
     
-    # Code
+    for x in range(len(MATRICE)):
+        for y in range(len(MATRICE[x])):
+            if MATRICE[x][y] == 0 :
+                pygame.draw.rect(SCREEN, "black", [x * 10, y * 10, 10, 10])
+            else:
+                pygame.draw.rect(SCREEN, "white", [x * 10, y * 10, 10, 10])
+    
+    pygame.display.flip()
     
     DT = CLOCK.tick(60) / 1000
+
+pygame.quit()
