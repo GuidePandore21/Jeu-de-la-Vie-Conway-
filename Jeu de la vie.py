@@ -90,13 +90,17 @@ root.title("Jeu de la vie - Conway")
 root.geometry("500x500")
 
 def onCelluleClick(row, col):
-    messagebox.showinfo("Information", f"Cellule cliquée : ({row}, {col})")
+    button = buttons[row][col]
+    current_color = button.cget('bg')
+    new_color = 'white' if current_color == 'black' else 'black'
+    button.config(bg=new_color)
 
 buttons = [[None for _ in range(COLS)] for _ in range(ROWS)]
 
 for row in range(ROWS):
     for col in range(COLS):
-        button = tk.Button(root, text=f"{row},{col}", command=lambda r=row, c=col: onCelluleClick(r, c))
+        button = tk.Button(root, bg='black', fg='white',
+                           command=lambda r=row, c=col: onCelluleClick(r, c))
         button.grid(row=row, column=col,)
         buttons[row][col] = button
 
