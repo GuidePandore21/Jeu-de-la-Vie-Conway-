@@ -46,36 +46,36 @@ def changerValeurMatrice(matrice, x, y, newValeur):
 MATRICE = initMatrice(ROWS, COLS)
     
 # -------------------- PYGAME --------------------#
+def jeuDelaVie(matrice):
+    pygame.init()
+    SCREEN = pygame.display.set_mode((HEIGHT, WIDTH))
+    CLOCK = pygame.time.Clock()
+    RUNNING = True
+    DT = 0
 
-# pygame.init()
-# SCREEN = pygame.display.set_mode((HEIGHT, WIDTH))
-# CLOCK = pygame.time.Clock()
-# RUNNING = True
-# DT = 0
+    while RUNNING:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                RUNNING = False
+        
+        SCREEN.fill("green")
+        
+        for x in range(len(matrice)):
+            for y in range(len(matrice[x])):
+                if matrice[x][y] == 0 :
+                    pygame.draw.rect(SCREEN, "black", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
+                else:
+                    pygame.draw.rect(SCREEN, "white", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
+        
+        pygame.display.flip()
+        
+        matrice = prochaineMatrice(matrice)
+        
+        DT = CLOCK.tick(60) / 1000
+        
+        pygame.time.wait(1000)
 
-# while RUNNING:
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             RUNNING = False
-    
-#     SCREEN.fill("green")
-    
-#     for x in range(len(MATRICE)):
-#         for y in range(len(MATRICE[x])):
-#             if MATRICE[x][y] == 0 :
-#                 pygame.draw.rect(SCREEN, "black", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
-#             else:
-#                 pygame.draw.rect(SCREEN, "white", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
-    
-#     pygame.display.flip()
-    
-#     MATRICE = prochaineMatrice(MATRICE)
-    
-#     DT = CLOCK.tick(60) / 1000
-    
-#     pygame.time.wait(1000)
-
-# pygame.quit()
+    pygame.quit()
 
 # -------------------- INTERFACE --------------------#
 
@@ -96,6 +96,9 @@ def onCelluleClick(row, col):
     
     button.config(bg=new_color)
 
+def onStartButtonClick():
+    jeuDelaVie(MATRICE)
+
 buttons = [[None for _ in range(COLS)] for _ in range(ROWS)]
 
 for row in range(ROWS):
@@ -103,5 +106,8 @@ for row in range(ROWS):
         button = tk.Button(root, bg='black', fg='white', command=lambda r=row, c=col: onCelluleClick(r, c), width=2, height=1)
         button.grid(row=row, column=col,)
         buttons[row][col] = button
+        
+startButton = tk.Button(root, text="Start", bg='blue', fg='white', width=10, height=2, command=lambda r=ROWS + 3, c=COLS // 2: onStartButtonClick())
+startButton.grid(row=ROWS + 3, column=COLS, pady=10, padx=10, sticky='se')
 
 root.mainloop()
