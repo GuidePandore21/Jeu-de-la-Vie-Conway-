@@ -100,7 +100,7 @@ buttons = [[None for _ in range(COLS)] for _ in range(ROWS)]
 for row in range(ROWS):
     for col in range(COLS):
         button = tk.Button(root, bg='black', fg='white',
-                           command=lambda r=row, c=col: onCelluleClick(r, c))
+                           command=lambda r=row, c=col: onCelluleClick(r, c), width=2, height=1)
         button.grid(row=row, column=col,)
         buttons[row][col] = button
 
