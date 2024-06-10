@@ -27,9 +27,9 @@ def combienDeVoisin(matrice, x, y):
     return nbVoisin
 
 def prochaineMatrice(matrice):
-    newMatrice = initMatrice(HEIGHT // 10, WIDTH // 10)
-    for x in range(len(matrice)):
-        for y in range(len(matrice[x])):
+    newMatrice = initMatrice(ROWS, COLS)
+    for y in range(ROWS):
+        for x in range(COLS):
             if matrice[x][y] == 0:
                 if combienDeVoisin(matrice, x, y) == 3:
                     newMatrice[x][y] = 1
@@ -41,11 +41,9 @@ def prochaineMatrice(matrice):
 def changerValeurMatrice(matrice, x, y, newValeur):
     matrice[x][y] = newValeur
 
-MATRICE = initMatrice(HEIGHT // 10, WIDTH // 10)
+MATRICE = initMatrice(ROWS, COLS)
 
-changerValeurMatrice(MATRICE, HEIGHT // 2, (WIDTH // 2) - 1, 1)
-changerValeurMatrice(MATRICE, HEIGHT // 2, WIDTH // 2, 1)
-changerValeurMatrice(MATRICE, HEIGHT // 2, (WIDTH // 2) + 1, 1)
+# changerValeurMatrice(MATRICE, HEIGHT // 2, WIDTH // 2, 1)
     
 # -------------------- PYGAME --------------------#
 
