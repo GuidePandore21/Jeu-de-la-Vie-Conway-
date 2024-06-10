@@ -1,18 +1,17 @@
 import pygame
 
-HEIGHT = 100
-WIDTH = 100
+HEIGHT = 600
+WIDTH = 600
+CELL_SIZE = 10
+ROWS = HEIGHT // CELL_SIZE
+COLS = WIDTH // CELL_SIZE
 
 # -------------------- FONCTIONS --------------------#
 
-def initMatrice(longueur, largeur):
+def initMatrice(rows, cols):
     matrice = []
-    
-    for x in range(largeur):
-        matrice.append([])
-        for y in range(longueur):
-            matrice[x].append(0)
-    
+    for y in range(rows):
+        matrice.append([0] * cols)
     return matrice
 
 def combienDeVoisin(matrice, x, y):
@@ -28,9 +27,9 @@ def combienDeVoisin(matrice, x, y):
     return nbVoisin
 
 def prochaineMatrice(matrice):
-    newMatrice = initMatrice(HEIGHT // 10, WIDTH // 10)
-    for x in range(len(matrice)):
-        for y in range(len(matrice[x])):
+    newMatrice = initMatrice(ROWS, COLS)
+    for y in range(ROWS):
+        for x in range(COLS):
             if matrice[x][y] == 0:
                 if combienDeVoisin(matrice, x, y) == 3:
                     newMatrice[x][y] = 1
@@ -42,17 +41,19 @@ def prochaineMatrice(matrice):
 def changerValeurMatrice(matrice, x, y, newValeur):
     matrice[x][y] = newValeur
 
-MATRICE = initMatrice(HEIGHT // 10, WIDTH // 10)
+MATRICE = initMatrice(ROWS, COLS)
 
-changerValeurMatrice(MATRICE, 3, 5, 1)
-changerValeurMatrice(MATRICE, 4, 5, 1)
-changerValeurMatrice(MATRICE, 5, 5, 1)
+changerValeurMatrice(MATRICE, ROWS // 2 - 2, COLS // 2, 1)
+changerValeurMatrice(MATRICE, ROWS // 2 - 1, COLS // 2, 1)
+changerValeurMatrice(MATRICE, ROWS // 2, COLS // 2, 1)
+changerValeurMatrice(MATRICE, ROWS // 2 + 1, COLS // 2, 1)
+changerValeurMatrice(MATRICE, ROWS // 2 + 2, COLS // 2, 1)
     
 # -------------------- PYGAME --------------------#
 
 pygame.init()
 SCREEN = pygame.display.set_mode((HEIGHT, WIDTH))
-CLOCK =pygame.time.Clock()
+CLOCK = pygame.time.Clock()
 RUNNING = True
 DT = 0
 
@@ -66,9 +67,9 @@ while RUNNING:
     for x in range(len(MATRICE)):
         for y in range(len(MATRICE[x])):
             if MATRICE[x][y] == 0 :
-                pygame.draw.rect(SCREEN, "black", [x * 10, y * 10, 10, 10])
+                pygame.draw.rect(SCREEN, "black", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
             else:
-                pygame.draw.rect(SCREEN, "white", [x * 10, y * 10, 10, 10])
+                pygame.draw.rect(SCREEN, "white", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
     
     pygame.display.flip()
     
