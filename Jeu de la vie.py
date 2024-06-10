@@ -1,7 +1,7 @@
 import pygame
 
-HEIGHT = 1000
-WIDTH = 1000
+HEIGHT = 600
+WIDTH = 600
 CELL_SIZE = 10
 ROWS = HEIGHT // CELL_SIZE
 COLS = WIDTH // CELL_SIZE
@@ -43,13 +43,17 @@ def changerValeurMatrice(matrice, x, y, newValeur):
 
 MATRICE = initMatrice(ROWS, COLS)
 
-# changerValeurMatrice(MATRICE, HEIGHT // 2, WIDTH // 2, 1)
+changerValeurMatrice(MATRICE, ROWS // 2 - 2, COLS // 2, 1)
+changerValeurMatrice(MATRICE, ROWS // 2 - 1, COLS // 2, 1)
+changerValeurMatrice(MATRICE, ROWS // 2, COLS // 2, 1)
+changerValeurMatrice(MATRICE, ROWS // 2 + 1, COLS // 2, 1)
+changerValeurMatrice(MATRICE, ROWS // 2 + 2, COLS // 2, 1)
     
 # -------------------- PYGAME --------------------#
 
 pygame.init()
 SCREEN = pygame.display.set_mode((HEIGHT, WIDTH))
-CLOCK =pygame.time.Clock()
+CLOCK = pygame.time.Clock()
 RUNNING = True
 DT = 0
 
