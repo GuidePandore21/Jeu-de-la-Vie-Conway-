@@ -2,8 +2,8 @@ import pygame
 import tkinter as tk
 from tkinter import messagebox
 
-HEIGHT = 600
-WIDTH = 600
+HEIGHT = 100
+WIDTH = 100
 CELL_SIZE = 10
 ROWS = HEIGHT // CELL_SIZE
 COLS = WIDTH // CELL_SIZE
@@ -45,11 +45,11 @@ def changerValeurMatrice(matrice, x, y, newValeur):
 
 MATRICE = initMatrice(ROWS, COLS)
 
-changerValeurMatrice(MATRICE, ROWS // 2 - 2, COLS // 2, 1)
-changerValeurMatrice(MATRICE, ROWS // 2 - 1, COLS // 2, 1)
-changerValeurMatrice(MATRICE, ROWS // 2, COLS // 2, 1)
-changerValeurMatrice(MATRICE, ROWS // 2 + 1, COLS // 2, 1)
-changerValeurMatrice(MATRICE, ROWS // 2 + 2, COLS // 2, 1)
+# changerValeurMatrice(MATRICE, ROWS // 2 - 2, COLS // 2, 1)
+# changerValeurMatrice(MATRICE, ROWS // 2 - 1, COLS // 2, 1)
+# changerValeurMatrice(MATRICE, ROWS // 2, COLS // 2, 1)
+# changerValeurMatrice(MATRICE, ROWS // 2 + 1, COLS // 2, 1)
+# changerValeurMatrice(MATRICE, ROWS // 2 + 2, COLS // 2, 1)
     
 # -------------------- PYGAME --------------------#
 
@@ -92,5 +92,12 @@ root.geometry("500x500")
 def onCelluleClick(row, col):
     messagebox.showinfo("Information", f"Cellule cliquée : ({row}, {col})")
 
+buttons = [[None for _ in range(COLS)] for _ in range(ROWS)]
+
+for row in range(ROWS):
+    for col in range(COLS):
+        button = tk.Button(root, text=f"{row},{col}", command=lambda r=row, c=col: onCelluleClick(r, c))
+        button.grid(row=row, column=col,)
+        buttons[row][col] = button
 
 root.mainloop()
