@@ -1,16 +1,17 @@
 import pygame
 
-HEIGHT = 100
-WIDTH = 100
+HEIGHT = 1000
+WIDTH = 1000
+TAILLE_CELLULE = 10
 
 # -------------------- FONCTIONS --------------------#
 
 def initMatrice(longueur, largeur):
     matrice = []
     
-    for x in range(largeur):
+    for x in range(longueur):
         matrice.append([])
-        for y in range(longueur):
+        for y in range(largeur):
             matrice[x].append(0)
     
     return matrice
@@ -44,9 +45,9 @@ def changerValeurMatrice(matrice, x, y, newValeur):
 
 MATRICE = initMatrice(HEIGHT // 10, WIDTH // 10)
 
-changerValeurMatrice(MATRICE, 3, 5, 1)
-changerValeurMatrice(MATRICE, 4, 5, 1)
-changerValeurMatrice(MATRICE, 5, 5, 1)
+changerValeurMatrice(MATRICE, HEIGHT // 2, (WIDTH // 2) - 1, 1)
+changerValeurMatrice(MATRICE, HEIGHT // 2, WIDTH // 2, 1)
+changerValeurMatrice(MATRICE, HEIGHT // 2, (WIDTH // 2) + 1, 1)
     
 # -------------------- PYGAME --------------------#
 
@@ -66,9 +67,9 @@ while RUNNING:
     for x in range(len(MATRICE)):
         for y in range(len(MATRICE[x])):
             if MATRICE[x][y] == 0 :
-                pygame.draw.rect(SCREEN, "black", [x * 10, y * 10, 10, 10])
+                pygame.draw.rect(SCREEN, "black", [x * TAILLE_CELLULE, y * TAILLE_CELLULE, TAILLE_CELLULE, TAILLE_CELLULE])
             else:
-                pygame.draw.rect(SCREEN, "white", [x * 10, y * 10, 10, 10])
+                pygame.draw.rect(SCREEN, "white", [x * TAILLE_CELLULE, y * TAILLE_CELLULE, TAILLE_CELLULE, TAILLE_CELLULE])
     
     pygame.display.flip()
     
