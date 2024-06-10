@@ -1,4 +1,6 @@
 import pygame
+import tkinter as tk
+from tkinter import messagebox
 
 HEIGHT = 600
 WIDTH = 600
@@ -51,32 +53,44 @@ changerValeurMatrice(MATRICE, ROWS // 2 + 2, COLS // 2, 1)
     
 # -------------------- PYGAME --------------------#
 
-pygame.init()
-SCREEN = pygame.display.set_mode((HEIGHT, WIDTH))
-CLOCK = pygame.time.Clock()
-RUNNING = True
-DT = 0
+# pygame.init()
+# SCREEN = pygame.display.set_mode((HEIGHT, WIDTH))
+# CLOCK = pygame.time.Clock()
+# RUNNING = True
+# DT = 0
 
-while RUNNING:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            RUNNING = False
+# while RUNNING:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             RUNNING = False
     
-    SCREEN.fill("green")
+#     SCREEN.fill("green")
     
-    for x in range(len(MATRICE)):
-        for y in range(len(MATRICE[x])):
-            if MATRICE[x][y] == 0 :
-                pygame.draw.rect(SCREEN, "black", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
-            else:
-                pygame.draw.rect(SCREEN, "white", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
+#     for x in range(len(MATRICE)):
+#         for y in range(len(MATRICE[x])):
+#             if MATRICE[x][y] == 0 :
+#                 pygame.draw.rect(SCREEN, "black", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
+#             else:
+#                 pygame.draw.rect(SCREEN, "white", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
     
-    pygame.display.flip()
+#     pygame.display.flip()
     
-    MATRICE = prochaineMatrice(MATRICE)
+#     MATRICE = prochaineMatrice(MATRICE)
     
-    DT = CLOCK.tick(60) / 1000
+#     DT = CLOCK.tick(60) / 1000
     
-    pygame.time.wait(1000)
+#     pygame.time.wait(1000)
 
-pygame.quit()
+# pygame.quit()
+
+# -------------------- INTERFACE --------------------#
+
+root = tk.Tk()
+root.title("Jeu de la vie - Conway")
+root.geometry("500x500")
+
+def onCelluleClick(row, col):
+    messagebox.showinfo("Information", f"Cellule cliquée : ({row}, {col})")
+
+
+root.mainloop()
