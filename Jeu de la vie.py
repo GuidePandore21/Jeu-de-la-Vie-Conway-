@@ -2,18 +2,16 @@ import pygame
 
 HEIGHT = 1000
 WIDTH = 1000
-TAILLE_CELLULE = 10
+CELL_SIZE = 10
+ROWS = HEIGHT // CELL_SIZE
+COLS = WIDTH // CELL_SIZE
 
 # -------------------- FONCTIONS --------------------#
 
-def initMatrice(longueur, largeur):
+def initMatrice(rows, cols):
     matrice = []
-    
-    for x in range(longueur):
-        matrice.append([])
-        for y in range(largeur):
-            matrice[x].append(0)
-    
+    for y in range(rows):
+        matrice.append([0] * cols)
     return matrice
 
 def combienDeVoisin(matrice, x, y):
@@ -67,9 +65,9 @@ while RUNNING:
     for x in range(len(MATRICE)):
         for y in range(len(MATRICE[x])):
             if MATRICE[x][y] == 0 :
-                pygame.draw.rect(SCREEN, "black", [x * TAILLE_CELLULE, y * TAILLE_CELLULE, TAILLE_CELLULE, TAILLE_CELLULE])
+                pygame.draw.rect(SCREEN, "black", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
             else:
-                pygame.draw.rect(SCREEN, "white", [x * TAILLE_CELLULE, y * TAILLE_CELLULE, TAILLE_CELLULE, TAILLE_CELLULE])
+                pygame.draw.rect(SCREEN, "white", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
     
     pygame.display.flip()
     
