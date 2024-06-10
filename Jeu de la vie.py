@@ -44,12 +44,6 @@ def changerValeurMatrice(matrice, x, y, newValeur):
     matrice[x][y] = newValeur
 
 MATRICE = initMatrice(ROWS, COLS)
-
-# changerValeurMatrice(MATRICE, ROWS // 2 - 2, COLS // 2, 1)
-# changerValeurMatrice(MATRICE, ROWS // 2 - 1, COLS // 2, 1)
-# changerValeurMatrice(MATRICE, ROWS // 2, COLS // 2, 1)
-# changerValeurMatrice(MATRICE, ROWS // 2 + 1, COLS // 2, 1)
-# changerValeurMatrice(MATRICE, ROWS // 2 + 2, COLS // 2, 1)
     
 # -------------------- PYGAME --------------------#
 
@@ -92,15 +86,21 @@ root.geometry("500x500")
 def onCelluleClick(row, col):
     button = buttons[row][col]
     current_color = button.cget('bg')
-    new_color = 'white' if current_color == 'black' else 'black'
+    
+    if current_color == 'black':
+        new_color = 'white'
+        changerValeurMatrice(MATRICE, row, col, 1)
+    else:
+        new_color = 'black' 
+        changerValeurMatrice(MATRICE, row, col, 0)
+    
     button.config(bg=new_color)
 
 buttons = [[None for _ in range(COLS)] for _ in range(ROWS)]
 
 for row in range(ROWS):
     for col in range(COLS):
-        button = tk.Button(root, bg='black', fg='white',
-                           command=lambda r=row, c=col: onCelluleClick(r, c), width=2, height=1)
+        button = tk.Button(root, bg='black', fg='white', command=lambda r=row, c=col: onCelluleClick(r, c), width=2, height=1)
         button.grid(row=row, column=col,)
         buttons[row][col] = button
 
