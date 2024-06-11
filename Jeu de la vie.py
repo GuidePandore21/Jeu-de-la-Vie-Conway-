@@ -2,8 +2,8 @@ import pygame
 import tkinter as tk
 from tkinter import messagebox
 
-HEIGHT = 100
 WIDTH = 100
+HEIGHT = 50
 CELL_SIZE = 10
 ROWS = HEIGHT // CELL_SIZE
 COLS = WIDTH // CELL_SIZE
@@ -30,8 +30,8 @@ def combienDeVoisin(matrice, x, y):
 
 def prochaineMatrice(matrice):
     newMatrice = initMatrice(ROWS, COLS)
-    for y in range(ROWS):
-        for x in range(COLS):
+    for x in range(ROWS):
+        for y in range(COLS):
             if matrice[x][y] == 0:
                 if combienDeVoisin(matrice, x, y) == 3:
                     newMatrice[x][y] = 1
@@ -48,7 +48,7 @@ MATRICE = initMatrice(ROWS, COLS)
 # -------------------- PYGAME --------------------#
 def jeuDelaVie(matrice):
     pygame.init()
-    SCREEN = pygame.display.set_mode((HEIGHT, WIDTH))
+    SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
     CLOCK = pygame.time.Clock()
     RUNNING = True
     DT = 0
@@ -63,13 +63,14 @@ def jeuDelaVie(matrice):
         for x in range(len(matrice)):
             for y in range(len(matrice[x])):
                 if matrice[x][y] == 0 :
-                    pygame.draw.rect(SCREEN, "black", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
+                    pygame.draw.rect(SCREEN, "black", [y * CELL_SIZE, x * CELL_SIZE, CELL_SIZE, CELL_SIZE])
                 else:
-                    pygame.draw.rect(SCREEN, "white", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
+                    pygame.draw.rect(SCREEN, "white", [y * CELL_SIZE, x * CELL_SIZE, CELL_SIZE, CELL_SIZE])
         
         pygame.display.flip()
         
-        matrice = prochaineMatrice(matrice)
+        newMatrice = prochaineMatrice(matrice)
+        matrice = newMatrice
         
         DT = CLOCK.tick(60) / 1000
         
@@ -81,7 +82,7 @@ def jeuDelaVie(matrice):
 
 root = tk.Tk()
 root.title("Jeu de la vie - Conway")
-root.geometry("500x500")
+root.geometry("1000x600")
 
 def onCelluleClick(row, col):
     button = buttons[row][col]
