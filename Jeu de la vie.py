@@ -1,7 +1,9 @@
 import pygame
+import tkinter as tk
+from tkinter import messagebox
 
-HEIGHT = 600
-WIDTH = 600
+WIDTH = 100
+HEIGHT = 50
 CELL_SIZE = 10
 ROWS = HEIGHT // CELL_SIZE
 COLS = WIDTH // CELL_SIZE
@@ -28,8 +30,8 @@ def combienDeVoisin(matrice, x, y):
 
 def prochaineMatrice(matrice):
     newMatrice = initMatrice(ROWS, COLS)
-    for y in range(ROWS):
-        for x in range(COLS):
+    for x in range(ROWS):
+        for y in range(COLS):
             if matrice[x][y] == 0:
                 if combienDeVoisin(matrice, x, y) == 3:
                     newMatrice[x][y] = 1
@@ -42,41 +44,71 @@ def changerValeurMatrice(matrice, x, y, newValeur):
     matrice[x][y] = newValeur
 
 MATRICE = initMatrice(ROWS, COLS)
-
-changerValeurMatrice(MATRICE, ROWS // 2 - 2, COLS // 2, 1)
-changerValeurMatrice(MATRICE, ROWS // 2 - 1, COLS // 2, 1)
-changerValeurMatrice(MATRICE, ROWS // 2, COLS // 2, 1)
-changerValeurMatrice(MATRICE, ROWS // 2 + 1, COLS // 2, 1)
-changerValeurMatrice(MATRICE, ROWS // 2 + 2, COLS // 2, 1)
     
 # -------------------- PYGAME --------------------#
+def jeuDelaVie(matrice):
+    pygame.init()
+    SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
+    CLOCK = pygame.time.Clock()
+    RUNNING = True
+    DT = 0
 
-pygame.init()
-SCREEN = pygame.display.set_mode((HEIGHT, WIDTH))
-CLOCK = pygame.time.Clock()
-RUNNING = True
-DT = 0
+    while RUNNING:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                RUNNING = False
+        
+        SCREEN.fill("green")
+        
+        for x in range(len(matrice)):
+            for y in range(len(matrice[x])):
+                if matrice[x][y] == 0 :
+                    pygame.draw.rect(SCREEN, "black", [y * CELL_SIZE, x * CELL_SIZE, CELL_SIZE, CELL_SIZE])
+                else:
+                    pygame.draw.rect(SCREEN, "white", [y * CELL_SIZE, x * CELL_SIZE, CELL_SIZE, CELL_SIZE])
+        
+        pygame.display.flip()
+        
+        newMatrice = prochaineMatrice(matrice)
+        matrice = newMatrice
+        
+        DT = CLOCK.tick(60) / 1000
+        
+        pygame.time.wait(1000)
 
-while RUNNING:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            RUNNING = False
-    
-    SCREEN.fill("green")
-    
-    for x in range(len(MATRICE)):
-        for y in range(len(MATRICE[x])):
-            if MATRICE[x][y] == 0 :
-                pygame.draw.rect(SCREEN, "black", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
-            else:
-                pygame.draw.rect(SCREEN, "white", [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE])
-    
-    pygame.display.flip()
-    
-    MATRICE = prochaineMatrice(MATRICE)
-    
-    DT = CLOCK.tick(60) / 1000
-    
-    pygame.time.wait(1000)
+    pygame.quit()
 
-pygame.quit()
+# -------------------- INTERFACE --------------------#
+
+root = tk.Tk()
+root.title("Jeu de la vie - Conway")
+root.geometry("1000x600")
+
+def onCelluleClick(row, col):
+    button = buttons[row][col]
+    current_color = button.cget('bg')
+    
+    if current_color == 'black':
+        new_color = 'white'
+        changerValeurMatrice(MATRICE, row, col, 1)
+    else:
+        new_color = 'black' 
+        changerValeurMatrice(MATRICE, row, col, 0)
+    
+    button.config(bg=new_color)
+
+def onStartButtonClick():
+    jeuDelaVie(MATRICE)
+
+buttons = [[None for _ in range(COLS)] for _ in range(ROWS)]
+
+for row in range(ROWS):
+    for col in range(COLS):
+        button = tk.Button(root, bg='black', fg='white', command=lambda r=row, c=col: onCelluleClick(r, c), width=2, height=1)
+        button.grid(row=row, column=col,)
+        buttons[row][col] = button
+        
+startButton = tk.Button(root, text="Start", bg='blue', fg='white', width=10, height=2, command=lambda r=ROWS + 3, c=COLS // 2: onStartButtonClick())
+startButton.grid(row=ROWS + 3, column=COLS, pady=10, padx=10, sticky='se')
+
+root.mainloop()
